@@ -61,6 +61,7 @@ border-radius: 5px;
   padding: 10px;
   color: red;
   border-radius: 5px;
+  cursor: pointer;
 }
 .fa-pencil{
   background-color: #ededf7;
@@ -122,5 +123,66 @@ margin-left: 5px;
 }
 .doneTaskIntegator article{
 margin-left: 5px;
+}
+.addTasks{
+  padding: 10px 20px;
+}
+.addTask{
+  width: 70%;
+}
+.addTask input{
+ margin-bottom: 10px;
+ height: 40px;
+}
+.addTask input, textarea{
+  width: 100%;
+  padding-left: 10px;
+  outline: none;
+}
+.addTask button{
+  border: none;
+  background-color: aqua;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+.editTasks{
+  padding: 10px 20px;
+}
+.editTask{
+  width: 70%;
+}
+.editTask input{
+ margin-bottom: 10px;
+ height: 40px;
+}
+.editTask input, textarea{
+  width: 100%;
+  padding-left: 10px;
+  outline: none;
+}
+.editTask button{
+  border: none;
+  background-color: aqua;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+.contextMenu {
+  position: fixed;
+  background-color: white;
+  border: 1px solid black;
+  z-index: 1000;
+  padding: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contextMenu div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.contextMenu div:hover {
+  background-color: blue;
 }
 /* Media Query */
