@@ -1,12 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+import Tasks from './Components/Tasks'
+import AddTask from './Components/AddTask'
 
 function App() {
-  
   return(
-    <h1>this is test</h1>
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' Component={Tasks}/>
+      <Route path='/add' Component={AddTask}/>
+    </Routes>
+    </BrowserRouter>
   )
 }
 

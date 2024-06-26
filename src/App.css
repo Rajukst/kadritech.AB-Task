@@ -1,0 +1,126 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.topHeading{
+  text-align: center;
+}
+.top-section{
+  padding: 10px 20px;
+}
+.taskbar{
+  display: flex;
+  justify-content: space-between;
+}
+.taskbar input{
+outline: none;
+padding-left: 10px;
+height: 45px;
+width: 30%
+}
+.taskbar a{
+text-decoration: none !important;
+color: black;
+}
+.taskbar button{
+background-color: aqua;
+padding: 10px 20px;
+border: none;
+font-weight: 600;
+border-radius: 5px;
+}
+.main-container{
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.container-new{
+  margin-right: 10px;
+  background-color: #ededf7;
+  height: 95vh;
+}
+.taskInfo{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+.newTasks{
+  background-color: white !important;
+  margin: 10px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 3.1fr 0.9fr;
+  grid-gap: 10px;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.fa-trash{
+  background-color: #ededf7;
+  padding: 10px;
+  color: red;
+  border-radius: 5px;
+}
+.fa-pencil{
+  background-color: #ededf7;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.container-ongoing{
+  margin-right: 10px;
+  background-color: bisque;
+  height: 95vh;
+}
+.integator{
+  height: 15px;
+  width: 15px;
+  background-color: #f7d000;
+  border-radius: 50%;
+}
+.ongoingTasks{
+  background-color: white !important;
+  margin: 10px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 3.1fr 0.9fr;
+  grid-gap: 5px;
+  align-items: center;
+  border-radius: 10px;
+}
+.taskIntegator{
+  display: flex;
+  align-items: center;
+}
+.taskIntegator article{
+margin-left: 5px;
+}
+.container-done{
+  background-color: aqua;
+  height: 95vh;
+}
+.doneIntegator{
+  height: 15px;
+  width: 15px;
+  background-color: #158706;
+  border-radius: 50%;
+}
+.doneTasks{
+  background-color: white !important;
+  margin: 10px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 3.3fr 0.7fr;
+  grid-gap: 5px;
+  align-items: center;
+  border-radius: 10px;
+}
+.doneTaskIntegator{
+  display: flex;
+  align-items: center;
+}
+.doneTaskIntegator article{
+margin-left: 5px;
+}
+/* Media Query */
