@@ -39,6 +39,8 @@ border-radius: 5px;
   margin-right: 10px;
   background-color: #ededf7;
   height: 95vh;
+  position: relative; 
+  min-height: 200px; 
 }
 .taskInfo{
   display: flex;
@@ -69,10 +71,20 @@ border-radius: 5px;
   border-radius: 5px;
 }
 
-.container-ongoing{
+.no-tasks-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 24px; 
+  color: black; 
+}
+
+.container-ongoing {
+  position: relative; 
+  min-height: 200px; 
+  background-color: #bababa;
   margin-right: 10px;
-  background-color: bisque;
-  height: 95vh;
 }
 .integator{
   height: 15px;
@@ -98,7 +110,7 @@ border-radius: 5px;
 margin-left: 5px;
 }
 .container-done{
-  background-color: aqua;
+  background-color: rgb(212, 212, 212);
   height: 95vh;
 }
 .doneIntegator{
@@ -180,9 +192,10 @@ margin-left: 5px;
 .contextMenu div {
   padding: 8px;
   cursor: pointer;
+  transition: all 0.5s ease-out;
 }
 
-.contextMenu div:hover {
-  background-color: blue;
+.contextMenu div:hover, .contextMenu div:focus{
+  background-color: orangered;
 }
 /* Media Query */

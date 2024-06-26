@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(
@@ -18,27 +17,40 @@ const Tasks = () => {
 
   const markAsNew = (id) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: false, ongoing: false } : task
+      task.id === id ? { ...task, completed: false, ongoing: false, dueTime: null } : task
     );
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
   const markAsOngoing = (id) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: false, ongoing: true } : task
-    );
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        let bangladeshTime = new Date();
+        bangladeshTime.setHours(bangladeshTime.getHours() + 6);
+        const isoBangladeshTime = bangladeshTime.toISOString().slice(0, 16);
+        return { ...task, completed: false, ongoing: true, dueTime: task.dueTime || isoBangladeshTime };
+      }
+      return task;
+    });
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
   const markAsDone = (id) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: true, ongoing: false } : task
-    );
-    setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    const taskToUpdate = tasks.find((task) => task.id === id);
+  
+    if (taskToUpdate) {
+      taskToUpdate.completed = true;
+      taskToUpdate.ongoing = false;
+      taskToUpdate.dueTime = null;
+  
+      setTasks([taskToUpdate, ...updatedTasks]);
+      localStorage.setItem("tasks", JSON.stringify([taskToUpdate, ...updatedTasks]));
+    }
   };
+  
 
   const handleContextMenu = (e, id, status) => {
     e.preventDefault();
@@ -53,6 +65,22 @@ const Tasks = () => {
     setSearchQuery(e.target.value);
   };
 
+  const handleDueTimeChange = (id, e) => {
+    const dueTime = e.target.value;
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, dueTime: dueTime } : task
+    );
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
+
+  const getBangladeshTimeString = (dateString) => {
+    const date = new Date(dateString);
+    const bdOffset = 6 * 60 * 60 * 1000; // Offset for Bangladesh timezone in milliseconds
+    const bdDate = new Date(date.getTime() + bdOffset);
+    return bdDate.toISOString().slice(0, 16);
+  };
+
   const filteredTasks = tasks.filter(task =>
     task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     task.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -61,6 +89,20 @@ const Tasks = () => {
   const newTasks = filteredTasks.filter(task => !task.ongoing && !task.completed);
   const ongoingTasks = filteredTasks.filter(task => task.ongoing && !task.completed);
   const doneTasks = filteredTasks.filter(task => task.completed);
+
+  useEffect(() => {
+    const checkOverdueTasks = () => {
+      const now = new Date();
+      ongoingTasks.forEach(task => {
+        if (task.dueTime && new Date(task.dueTime) < now) {
+          alert(`Task "${task.title}" is overdue!`);
+        }
+      });
+    };
+
+    const intervalId = setInterval(checkOverdueTasks, 60000); // Check every minute
+    return () => clearInterval(intervalId);
+  }, [ongoingTasks]);
 
   return (
     <div onClick={handleClick}>
@@ -106,6 +148,11 @@ const Tasks = () => {
             <h4>Ongoing Task</h4>
             <article>Total Task: {ongoingTasks.length}</article>
           </div>
+          {ongoingTasks.length === 0 && (
+            <div className="no-tasks-message">
+              <h2>No Ongoing Tasks</h2>
+            </div>
+          )}
           {ongoingTasks.map((task, index) => (
             <div className="ongoingTasks" key={index} onContextMenu={(e) => handleContextMenu(e, task.id, 'ongoing')}>
               <div className="ongoingTask">
@@ -114,8 +161,17 @@ const Tasks = () => {
               </div>
               <div className="taskIntegator">
                 <div className="integator"></div>
-                <article>{task?.ongoing && "Ongoing"}</article>
+                <article>{task.ongoing ? "Ongoing" : ""}</article>
               </div>
+              <div className="overDueTime">
+                    <article>OverDue Time</article>
+                    <input
+                    className='overdueTimeInput'
+                  type="datetime-local"
+                  value={task.dueTime ? getBangladeshTimeString(task.dueTime) : ''}
+                  onChange={(e) => handleDueTimeChange(task.id, e)}
+                />
+                </div>
             </div>
           ))}
         </section>
@@ -130,9 +186,9 @@ const Tasks = () => {
                 <h5>{task.title}</h5>
                 <article>{task.description}</article>
               </div>
-              <div className="doneTaskIntegator">
+              <div className="taskIntegator">
                 <div className="doneIntegator"></div>
-                <article>{task?.completed && "Done"}</article>
+                <article>{task.completed ? 'Done' : task.ongoing ? 'Ongoing' : ''}</article>
               </div>
             </div>
           ))}
