@@ -9,26 +9,11 @@
 .top-section{
   padding: 10px 20px;
 }
-.taskbar{
-  display: flex;
-  justify-content: space-between;
-}
 .taskbar input{
 outline: none;
 padding-left: 10px;
 height: 45px;
 width: 30%
-}
-.taskbar a{
-text-decoration: none !important;
-color: black;
-}
-.taskbar button{
-background-color: aqua;
-padding: 10px 20px;
-border: none;
-font-weight: 600;
-border-radius: 5px;
 }
 .main-container{
   padding: 10px 20px;
@@ -158,6 +143,30 @@ margin-left: 5px;
   border-radius: 5px;
   font-weight: 600;
 }
+.addTaskBtn{
+  margin-left: 10px;
+}
+.addTaskBtn a{
+  text-decoration: none !important;
+  color: black;
+  }
+  .addTaskBtn button{
+  background-color: aqua;
+  padding: 10px 20px;
+  border: none;
+  font-weight: 600;
+  border-radius: 5px;
+  }
+  .taskintegator{
+    height: 15px;
+    width: 15px;
+    background-color: #4106ca;
+    border-radius: 50%;
+  }
+  .taskStatus{
+display: flex;
+align-items: center;
+  }
 .editTasks{
   padding: 10px 20px;
 }

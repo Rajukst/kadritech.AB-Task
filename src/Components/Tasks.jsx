@@ -17,7 +17,7 @@ const Tasks = () => {
 
   const markAsNew = (id) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: false, ongoing: false, dueTime: null } : task
+      task.id === id ? { ...task, completed: false, ongoing: false, dueTime: null, newtask: true } : task
     );
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
@@ -33,8 +33,13 @@ const Tasks = () => {
       }
       return task;
     });
-    setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  
+    // Move the updated task to the top of the ongoing tasks list
+    const updatedTask = updatedTasks.find((task) => task.id === id);
+    const otherTasks = updatedTasks.filter((task) => task.id !== id);
+    
+    setTasks([updatedTask, ...otherTasks]);
+    localStorage.setItem("tasks", JSON.stringify([updatedTask, ...otherTasks]));
   };
 
   const markAsDone = (id) => {
@@ -112,7 +117,6 @@ const Tasks = () => {
             <h3>Todo App Kadritech.AB</h3>
           </div>
           <div className="taskbar">
-            <Link to="/add"><button>Add Task</button></Link>
             <input
               type="text"
               placeholder='Search Task'
@@ -128,20 +132,33 @@ const Tasks = () => {
             <h4>New Task</h4>
             <article>Total Task: {newTasks.length}</article>
           </div>
-          {newTasks.map((task, index) => (
-            <div className="newTasks" key={index} onContextMenu={(e) => handleContextMenu(e, task.id, 'new')}>
-              <div className="taskNameAndTitle">
-                <h5>{task.title}</h5>
-                <article>{task.description}</article>
-              </div>
-              <div className="taskEditAndDelete">
-                <i onClick={() => deleteTask(task.id)} className="fa-solid fa-trash"></i>
-                <Link to={`edit/${task.id}`}>
-                  <i className="fa-solid fa-pencil ms-1"></i>
-                </Link>
-              </div>
+          <div className="addTaskBtn">
+          <Link to="/add"><button>Add Task</button></Link>
+          </div>
+          {newTasks.length === 0 && (
+            <div className="no-tasks-message">
+              <h2>No New Tasks</h2>
             </div>
-          ))}
+          )}
+          {newTasks.map((task, index) => (
+  <div className="newTasks" key={index} onContextMenu={(e) => handleContextMenu(e, task.id, 'new')}>
+    <div className="taskNameAndTitle">
+      <h5>{task.title}</h5>
+      <article>{task.description}</article>
+    </div>
+    <div className="taskStatus">
+      <div className="taskintegator"></div>
+      <article className='ms-1'>NewTask</article>
+    </div>
+    <div className="taskEditAndDelete">
+      <i onClick={() => deleteTask(task.id)} className="fa-solid fa-trash"></i>
+      <Link to={`edit/${task.id}`}>
+        <i className="fa-solid fa-pencil ms-1"></i>
+      </Link>
+    </div>
+  </div>
+))}
+
         </section>
         <section className='container-ongoing'>
           <div className="taskInfo">
@@ -180,6 +197,11 @@ const Tasks = () => {
             <h4>Done Task</h4>
             <article>Total Task: {doneTasks.length}</article>
           </div>
+          {doneTasks.length === 0 && (
+            <div className="no-tasks-message">
+              <h2>No Done Tasks</h2>
+            </div>
+          )}
           {doneTasks.map((task, index) => (
             <div className="doneTasks" key={index} onContextMenu={(e) => handleContextMenu(e, task.id, 'done')}>
               <div className="doneTask">
