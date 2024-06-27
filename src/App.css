@@ -23,7 +23,7 @@ width: 30%
 .container-new{
   margin-right: 10px;
   background-color: #ededf7;
-  height: 70vh;
+  height: 90vh;
   position: relative; 
   min-height: 200px; 
 }
@@ -70,7 +70,7 @@ width: 30%
   min-height: 200px; 
   background-color: #bababa;
   margin-right: 10px;
-  height: 70vh; 
+  height: 90vh; 
 }
 .integator{
   height: 15px;
@@ -97,7 +97,7 @@ margin-left: 5px;
 }
 .container-done{
   background-color: rgb(212, 212, 212);
-  height: 70vh;
+  height: 90vh;
   min-height: 200px; 
 }
 .doneIntegator{
